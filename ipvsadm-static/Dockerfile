@@ -7,7 +7,8 @@ ENV NL_VERSION="3.2.29" \
     IPVSADM_REPO="https://github.com/Crazykev/ipvsadm" \
     OUTPUT_DIR="/data/"
 
-RUN yum install -y \
+RUN yum clean all && \
+    yum install -y --nogpgcheck \
         binutils \
         bison \
         flex \
