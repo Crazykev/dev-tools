@@ -1,0 +1,31 @@
+# Copy of pod.yaml without file extension for test
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
+    command: [nginx]
+    args: [-c, $(CONFIG_PATH), -g, 'daemon off;']
+    env:
+        - name: CONFIG_PATH
+          valueFrom:
+              configMapKeyRef:
+                  name: nginx-config
+                  key:  config-path
+    ports:
+    - containerPort: 8080
+    volumeMounts:
+        - name: config-volume
+          mountPath: /data
+  volumes:
+      - name: config-volume
+        configMap:
+            name: nginx-config
+            items:
+                - key: nginx.conf
+                  path: nginx.conf

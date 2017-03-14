@@ -1,0 +1,48 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  data:
+    nginx.config: |
+      user  nginx;
+      worker_processes  1;
+
+      error_log  /var/log/nginx/error.log warn;
+      pid        /var/run/nginx.pid;
+
+
+      events {
+          worker_connections  1024;
+      }
+
+
+      http {
+          include       /etc/nginx/mime.types;
+          default_type  application/octet-stream;
+
+          log_format  main  ' -  [] "" '
+                            '  "" '
+                            '"" ""';
+
+          access_log  /var/log/nginx/access.log  main;
+
+          sendfile        on;
+          #tcp_nopush     on;
+
+          keepalive_timeout  65;
+
+          #gzip  on;
+
+          include /etc/nginx/conf.d/*.conf;
+      }
+  kind: ConfigMap
+  metadata:
+    creationTimestamp: 2017-03-08T05:14:31Z
+    name: nginx-config
+    namespace: default
+    resourceVersion: "432298"
+    selfLink: /api/v1/namespaces/default/configmaps/nginx-config
+    uid: 1c75c9d8-03be-11e7-8d18-42010a8c0002
+kind: List
+metadata: {}
+resourceVersion: ""
+selfLink: ""

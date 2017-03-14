@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+    name: nginx-controller
+spec:
+    replicas: 3
+    selector:
+        name: nginx
+        version: stable
+    template:
+        metadata:
+            labels:
+                name: nginx
+                version: stable
+        spec:
+            containers:
+            - name: nginx
+              image: nginx:1.7.9
+              ports:
+              - containerPort: 80

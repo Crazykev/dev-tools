@@ -3,10 +3,9 @@ kind: Service
 metadata:
   name: myservice
 spec:
-    externalIPs:
-        - 80.11.12.10
     selector:
         name: nginx
+    type: NodePort
     ports:
         - protocol: TCP
           port: 80

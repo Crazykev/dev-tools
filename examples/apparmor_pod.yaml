@@ -1,0 +1,13 @@
+piVersion: v1
+kind: Pod
+metadata:
+ name: hello-apparmor
+ annotations:
+  container.apparmor.security.beta.kubernetes.io/hello: localhost/k8s-apparmor-example-deny-write
+        # Tell Kubernetes to apply the AppArmor profile "k8s-apparmor-example-deny-write".
+        # Note that this is ignored if the Kubernetes node is not running version 1.4 or greater.
+spec:
+ containers:
+ - name: hello
+   image: busybox
+   command: [ "sh", "-c", "echo 'Hello AppArmor!' && sleep 1h"  ]
