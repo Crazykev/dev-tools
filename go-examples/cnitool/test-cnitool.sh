@@ -16,7 +16,8 @@ trap "cleanup" EXIT SIGINT
 cd $CNITOOL_ROOT
 go build -o cnitool
 
-ifconfig
+sudo ifconfig
+sudo route -n
 sudo ip netns list
 
 sudo ip netns add $NETNS
