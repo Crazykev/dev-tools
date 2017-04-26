@@ -13,7 +13,7 @@ go:
 go_import_path: github.com/Crazykev/dev-tools/go-examples
 
 install:
-  - go-examples/cnitool/install-cni.sh
+  - cnitool/install-cni.sh
 
 script:
-  - go-examples/cnitool/test-cnitool.sh
+  - cnitool/test-cnitool.sh
