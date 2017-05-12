@@ -7,17 +7,19 @@ else
     exit 1
 fi
 
-echo "Install vim plugins"
-wget -qO- https://raw.github.com/Crazykev/vim/master/setup.sh | bash -x
+if which vim > /dev/null 2>&1; then
+    echo "vim already exist, skip install"
+else
+    echo "Install vim plugins"
+    wget -qO- https://raw.github.com/Crazykev/vim/master/setup.sh | bash -x
+fi
 
 echo "Install basic dependencies"
 $PM update -y && $PM install -y \
     autoconf automake device-mapper-devel libvirt libvirt-devel net-tools
 
 echo "Install hypercontainer package"
-$PM install -y https://hypercontainer-install.s3.amazonaws.com/hyper-container-0.8.0-1.el7.centos.x86_64.rpm
-$PM install -y https://hypercontainer-install.s3.amazonaws.com/hyperstart-0.8.0-1.el7.centos.x86_64.rpm
-$PM install -y https://hypercontainer-install.s3.amazonaws.com/qemu-hyper-2.4.1-3.el7.centos.x86_64.rpm
+curl -sSL https://hypercontainer.io/install | bash
 
 source ~/.bashrc
 GOPATH=${GOPATH:-$HOME/go-project}
