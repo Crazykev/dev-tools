@@ -39,10 +39,11 @@ user = "root"
 group = "root"
 clear_emulator_capabilities = 0
 EOF
-systemctl restart libvirt
+systemctl restart libvirtd
 cd $HYPERD_ROOT
 ./autogen.sh && ./configure && make
-cp hyperd hyperctl /usr/bin/
+systemctl stop hyperd
+cp -f ./{hyperd,hyperctl} $(dirname $(which hyperd) )
 cat >/etc/hyper/config <<EOF
 # Boot kernel
 Kernel=/var/lib/hyper/kernel
@@ -55,6 +56,9 @@ Hypervisor=libvirt
 # The tcp endpoint of gRPC API
 gRPCHost=127.0.0.1:22318
 EOF
+cd $HYPERSTART_ROOT
+./autogen.sh && ./configure && make
+cp -f build/{kernel,hyper-initrd.img} /var/lib/hyper/
 systemctl enable hyperd
 systemctl restart hyperd
 
